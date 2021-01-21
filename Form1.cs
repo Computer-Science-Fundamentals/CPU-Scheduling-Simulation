@@ -81,7 +81,9 @@ namespace CPU_SCHEDULING_SIMULATION
         private void BtnGenerateProcess_Click(object sender, EventArgs e)
         {
             int noOfProcesses = Int32.Parse(txtNoOfProcess.Text);
-            List<Process> inputProcesses = WaitTimeGenerator.GenerateProcesses(noOfProcesses);
+            ICDFFunction exponentialDistributionFunction = new ExponentialDistributionFunction();
+            WaitTimeGenerator waitTimeGenerator = WaitTimeGenerator.GetInstance(exponentialDistributionFunction);
+            List<Process> inputProcesses = waitTimeGenerator.GenerateProcesses(noOfProcesses);
 
             //cpu scheduling simulation
             SchedulingAlgorithm priorityPreemptive = new PriorityPremptive(inputProcesses);

@@ -7,37 +7,35 @@ namespace CPU_SCHEDULING_SIMULATION
 {
     class WaitTimeGenerator
     {
-        private static readonly Random rnd = new Random();
-        /** 
-         * This method generates the burst time of 
-         * various cpu scheduling parameter such as 
-         * burst time,
-         * using cummulative distribution function
-         * P(x < X | x > 0) = 1 - e^-LX
-         * where L = Lamdba, using Lambda of 1
-         * between range 51 - 100
-        **/
-        private static Double ComputeCDF() {
-            int lambda = 1;
-            Double X, cdf;
-            lock (rnd)
-            {//synchronize
-                X = rnd.NextDouble();
-            };
-            //Console.WriteLine("X: {0}", X);
-            cdf = 1 - Math.Exp(-lambda * X);
-            return cdf;
+        /*This Class is a Singleton for Generating Simulation Time
+         * Thread Safety is ensured by using double check locking
+         */
+        private readonly Random rnd = new Random();
+        private ICDFFunction cDFFunction;
+        private static WaitTimeGenerator instance;
+        private static object padlock = new object();
+        private WaitTimeGenerator(ICDFFunction cDFFunction)
+        {
+            this.cDFFunction = cDFFunction;
         }
 
-        private static int GenerateBurstTime(int min = 51, int max = 100) {
-            Double cdf = ComputeCDF();
-            //scale cdf between 51 - 100
-            int wt = (int) (min + (cdf * (max - min)));
-            return wt;
+        public static WaitTimeGenerator GetInstance(ICDFFunction cDFFunction)
+        {
+            if (instance == null) {
+                lock (padlock)
+                {
+                    if (instance == null)
+                    {
+                        instance = new WaitTimeGenerator(cDFFunction);
+                    }
+                }
+            }
+
+            return instance;
         }
 
-        private static Dictionary<string, Object> GenerateIOBlockParameter(int min = 0, int max = 100) {
-            Double ioBlockProbability = ComputeCDF();
+        private Dictionary<string, Object> GenerateIOBlockParameter(int min = 0, int max = 100) {
+            Double ioBlockProbability = cDFFunction.ComputeCDF(rnd);
             int ioBlockTime = (int)(min + (ioBlockProbability * (max - min)));
             return new Dictionary<string, object>()
             {
@@ -46,7 +44,7 @@ namespace CPU_SCHEDULING_SIMULATION
             };
         }
 
-        private static int GenerateArrivalTime(int lastArrivalTime = 0) {
+        private int GenerateArrivalTime(int lastArrivalTime = 0) {
             int waitTime = 0, min = 0, max = 5;
             lock (rnd)
             {//synchronize
@@ -55,7 +53,7 @@ namespace CPU_SCHEDULING_SIMULATION
             return lastArrivalTime + waitTime;
         }
 
-        public static List<Process> GenerateProcesses(int noOfProcesses)
+        public List<Process> GenerateProcesses(int noOfProcesses)
         {
             int lastArrivalTime = 0;
             List<Process> inputProcesses = new List<Process>();
@@ -65,7 +63,8 @@ namespace CPU_SCHEDULING_SIMULATION
 
                 string pid = String.Format("P{0}", i);
                 Dictionary<string, object> IOBlockParam = GenerateIOBlockParameter();
-                int BurstTime = GenerateBurstTime();
+                int BurstTime = cDFFunction.GenerateBurstTime(rnd);
+                Console.WriteLine(BurstTime);
                 int ArrivalTime = lastArrivalTime;
 
                 Process process = new Process(pid, BurstTime, ArrivalTime, (Double)IOBlockParam["IOBlockProbability"], (int)IOBlockParam["IOBlockTime"]);
@@ -81,6 +80,7 @@ namespace CPU_SCHEDULING_SIMULATION
                                  )
                 );
             }
+
             return inputProcesses;
         }
 
