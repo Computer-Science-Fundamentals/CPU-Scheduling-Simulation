@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
+using System.Web.Script.Serialization;
 using System.Windows.Forms;
 
 namespace CPU_SCHEDULING_SIMULATION
@@ -12,9 +10,9 @@ namespace CPU_SCHEDULING_SIMULATION
     public partial class Form1 : Form
     {
         private BindingSource processBindingSource;
-        private BindingSource ppScheduleBindingSource;
-        private BindingSource hrrnScheduleBindingSource;
-        private BindingSource eodrrScheduleBindingSource;
+        private BindingSource fcfsScheduleBindingSource;
+        private BindingSource pnpScheduleBindingSource;
+        private BindingSource srjfScheduleBindingSource;
         public Form1()
         {
             InitializeComponent();
@@ -23,9 +21,9 @@ namespace CPU_SCHEDULING_SIMULATION
         private void Form1_Load(object sender, EventArgs e)
         {
             processBindingSource = new BindingSource();
-            ppScheduleBindingSource = new BindingSource();
-            hrrnScheduleBindingSource = new BindingSource();
-            eodrrScheduleBindingSource = new BindingSource();
+            fcfsScheduleBindingSource = new BindingSource();
+            pnpScheduleBindingSource = new BindingSource();
+            srjfScheduleBindingSource = new BindingSource();
         }
 
         private DataTable ConvertListToDataTable(List<object[]> list, bool isParamTypeDatatable = true)
@@ -46,7 +44,7 @@ namespace CPU_SCHEDULING_SIMULATION
                 dt.Rows.Add(values);
             }
             DataView dv = dt.DefaultView;
-            dv.Sort = isParamTypeDatatable ? "ArrivalTime" : "FinishTime";
+            dv.Sort = isParamTypeDatatable ? "ArrivalTime" : "StartTime";
             return dv.ToTable();
         }
         private void LoadDataGrid(DataGridView gridView, BindingSource bindingSource, DataTable dt)
@@ -81,34 +79,34 @@ namespace CPU_SCHEDULING_SIMULATION
         private void BtnGenerateProcess_Click(object sender, EventArgs e)
         {
             int noOfProcesses = Int32.Parse(txtNoOfProcess.Text);
-            ICDFFunction exponentialDistributionFunction = new ExponentialDistributionFunction();
-            WaitTimeGenerator waitTimeGenerator = WaitTimeGenerator.GetInstance(exponentialDistributionFunction);
+            ICDFFunction uniformDistributionFunction = new UniformDistributionFunction();
+            WaitTimeGenerator waitTimeGenerator = WaitTimeGenerator.GetInstance(uniformDistributionFunction);
             List<Process> inputProcesses = waitTimeGenerator.GenerateProcesses(noOfProcesses);
 
             //cpu scheduling simulation
-            SchedulingAlgorithm priorityPreemptive = new PriorityPremptive(inputProcesses);
-            Schedule ppSchedule = priorityPreemptive.GenerateProcessSchedule();
+            SchedulingAlgorithm fcfsPreemptive = new FirstComeFirstServe(inputProcesses);
+            Schedule fcfsSchedule = fcfsPreemptive.GenerateProcessSchedule();
 
-            SchedulingAlgorithm highestResponseRatioNext = new HighestResponseRatioNext(inputProcesses);
-            Schedule hrrnSchedule = highestResponseRatioNext.GenerateProcessSchedule();
+            SchedulingAlgorithm priorityNonPreemptive = new PriorityNonPreemptive(inputProcesses);
+            Schedule pnpSchedule = priorityNonPreemptive.GenerateProcessSchedule();
 
-            SchedulingAlgorithm evenOddDynamicRoundRobin = new EvenOddDynamicRoundRobin(inputProcesses);
-            Schedule eodrrSchedule = evenOddDynamicRoundRobin.GenerateProcessSchedule();
+            SchedulingAlgorithm shortestRemainingJobFirst = new ShortestRemainingJobFirst(inputProcesses);
+            Schedule srjfSchedule = shortestRemainingJobFirst.GenerateProcessSchedule();
 
-            List<object[]> listProcesses, listPPSchedule, listHRRNSchedule, listEODRRSchedule;
+            List<object[]> listProcesses, listFCFSSchedule, listPNPSchedule, listSRJFSchedule;
 
             listProcesses = new List<Object[]>();
-            listPPSchedule = new List<Object[]>();
-            listHRRNSchedule = new List<Object[]>();
-            listEODRRSchedule = new List<Object[]>();
+            listFCFSSchedule = new List<Object[]>();
+            listPNPSchedule = new List<Object[]>();
+            listSRJFSchedule = new List<Object[]>();
             List<string> strDataset = new List<string>();
-            List<string> ppTurn = new List<string>();
-            List<string> hrrnTurn = new List<string>();
-            List<string> eodrrTurn = new List<string>();
+            List<string> fcfsTurn = new List<string>();
+            List<string> pnpTurn = new List<string>();
+            List<string> srjfTurn = new List<string>();
 
             string labels = "";
 
-            int totalPPTurnAroundTime = 0, totalHRRNTurnAroundTime = 0, totalEODRRTurnAroundTime = 0;
+            int totalFCFSTurnAroundTime = 0, totalPNPTurnAroundTime = 0, totalSRJFTurnAroundTime = 0;
             foreach (Process process in inputProcesses)
             {
                 string pid = process.GetProcessID();
@@ -120,81 +118,78 @@ namespace CPU_SCHEDULING_SIMULATION
                     process.GetIOBlockTime()
                 });
 
-                int ppTurnAroundTime = ppSchedule.GetTurnAroundTime(process);
-                totalPPTurnAroundTime += ppTurnAroundTime;
+                int fcfsTurnAroundTime = fcfsSchedule.GetTurnAroundTime(process);
+                totalFCFSTurnAroundTime += fcfsTurnAroundTime;
 
-                int endTime = ppSchedule.GetEndTime(process);
+                int endTime = fcfsSchedule.GetEndTime(process);
 
-                ppTurn.Add(ppTurnAroundTime.ToString());
-                listPPSchedule.Add(new object[] {
+                fcfsTurn.Add(fcfsTurnAroundTime.ToString());
+                listFCFSSchedule.Add(new object[] {
                     pid,
                     process.GetArrivalTime(),
                     endTime,
-                    ppTurnAroundTime
+                    fcfsTurnAroundTime
                 });
 
-                int hrrnTurnAroundTime = hrrnSchedule.GetTurnAroundTime(process);
-                totalHRRNTurnAroundTime += hrrnTurnAroundTime;
+                int pnpTurnAroundTime = pnpSchedule.GetTurnAroundTime(process);
+                totalPNPTurnAroundTime += pnpTurnAroundTime;
 
-                endTime = hrrnSchedule.GetEndTime(process);
-                hrrnTurn.Add(hrrnTurnAroundTime.ToString());
-                listHRRNSchedule.Add(new object[] {
+                endTime = pnpSchedule.GetEndTime(process);
+                pnpTurn.Add(pnpTurnAroundTime.ToString());
+                listPNPSchedule.Add(new object[] {
                     pid,
                     process.GetArrivalTime(),
                     endTime,
-                    hrrnSchedule.GetTurnAroundTime(process)
+                    pnpSchedule.GetTurnAroundTime(process)
                 });
 
-                int eodrrTurnAroundTime = eodrrSchedule.GetTurnAroundTime(process);
-                totalEODRRTurnAroundTime += eodrrTurnAroundTime;
+                int srjfTurnAroundTime = srjfSchedule.GetTurnAroundTime(process);
+                totalSRJFTurnAroundTime += srjfTurnAroundTime;
 
-                endTime = eodrrSchedule.GetEndTime(process);
-                eodrrTurn.Add(hrrnTurnAroundTime.ToString());
-                listEODRRSchedule.Add(new object[] {
+                endTime = srjfSchedule.GetEndTime(process);
+                srjfTurn.Add(pnpTurnAroundTime.ToString());
+                listSRJFSchedule.Add(new object[] {
                     pid,
                     process.GetArrivalTime(),
                     endTime,
-                    eodrrSchedule.GetTurnAroundTime(process)
+                    srjfSchedule.GetTurnAroundTime(process)
                 });
             }
 
             strDataset.Add(ConvertToJSON(new Dictionary<string, object>() {
-                { "label", "Priority Preemptive" },
-                {"data", String.Join(",", ppTurn.ToArray()) }
+                { "label", "First Come First Serve" },
+                {"data", String.Join(",", fcfsTurn.ToArray()) }
             }));
             strDataset.Add(ConvertToJSON(new Dictionary<string, object>() {
-                { "label", "Highest Response Ratio Next" },
-                {"data", String.Join(",", hrrnTurn.ToArray()) }
+                { "label", "Priority Non Preemptive" },
+                {"data", String.Join(",", pnpTurn.ToArray()) }
             }));
             strDataset.Add(ConvertToJSON(new Dictionary<string, object>() {
-                { "label", "Even-Odd Dynamic Round Robin" },
-                {"data", String.Join(",", eodrrTurn.ToArray()) }
+                { "label", "Shortest Remaining Job First" },
+                {"data", String.Join(",", srjfTurn.ToArray()) }
             }));
             labels = labels.Substring(0, labels.Length - 1);
-            int avgPPSchedule, avgHRRNSchedule, avgEODRRSchedule;
+            int avgFCFSSchedule, avgPNPSchedule, avgSRJFSchedule;
 
-            avgPPSchedule = totalPPTurnAroundTime / noOfProcesses;
-            avgHRRNSchedule = totalHRRNTurnAroundTime / noOfProcesses;
-            avgEODRRSchedule = totalEODRRTurnAroundTime / noOfProcesses;
+            avgFCFSSchedule = totalFCFSTurnAroundTime / noOfProcesses;
+            avgPNPSchedule = totalPNPTurnAroundTime / noOfProcesses;
+            avgSRJFSchedule = totalSRJFTurnAroundTime / noOfProcesses;
 
-            lblPPAvgTurnAround.Text = avgPPSchedule.ToString();
-            lblHRRNAvgTurnAround.Text = avgHRRNSchedule.ToString();
-            lblEODRRAvgTurnAround.Text = avgEODRRSchedule.ToString();
+            lblFCFSAvgTurnAround.Text = avgFCFSSchedule.ToString();
+            lblPNPAvgTurnAround.Text = avgPNPSchedule.ToString();
+            lblSRJFAvgTurnAround.Text = avgSRJFSchedule.ToString();
 
             LoadDataGrid(grdProcesses, processBindingSource, ConvertListToDataTable(listProcesses));
-            LoadDataGrid(grdPPSchedule, ppScheduleBindingSource, ConvertListToDataTable(listPPSchedule, false));
-            LoadDataGrid(grdHRRNSchedule, hrrnScheduleBindingSource, ConvertListToDataTable(listHRRNSchedule, false));
-            LoadDataGrid(grdEODRRSchedule, eodrrScheduleBindingSource, ConvertListToDataTable(listEODRRSchedule, false));
+            LoadDataGrid(grdFCFSSchedule, fcfsScheduleBindingSource, ConvertListToDataTable(listFCFSSchedule, false));
+            LoadDataGrid(grdPNPSchedule, pnpScheduleBindingSource, ConvertListToDataTable(listPNPSchedule, false));
+            LoadDataGrid(grdSRJFSchedule, srjfScheduleBindingSource, ConvertListToDataTable(listSRJFSchedule, false));
 
             GenerateGanttChart(strDataset.ToArray(), labels);
-            //Console.WriteLine("Priority Preemptive CPU Scheduling Simulation Done.");
+        }
 
-            //foreach (Process process in inputProcesses)
-            //{
-            //    Console.WriteLine(process.GetProcessID() + ";" + "PP;" + ppSchedule.GetTurnAroundTime(process));
-            //    Console.WriteLine(process.GetProcessID() + ";" + "HRRN;" + hrrnSchedule.GetTurnAroundTime(process));
-            //    Console.WriteLine(process.GetProcessID() + ";" + "EODRR;" + eodrrSchedule.GetTurnAroundTime(process));
-            //}
+        private void groupBox2_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

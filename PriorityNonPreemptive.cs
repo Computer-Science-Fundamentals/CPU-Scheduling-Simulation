@@ -5,12 +5,12 @@ using System.Text;
 
 namespace CPU_SCHEDULING_SIMULATION
 {
-    class HighestResponseRatioNext : SchedulingAlgorithm
+    class PriorityNonPreemptive : SchedulingAlgorithm
     {
-        public HighestResponseRatioNext(List<Process> inputwaitingQueue) : base(inputwaitingQueue)
-        {
-
+        public PriorityNonPreemptive(List<Process> inputwaitingQueue) : base(inputwaitingQueue)
+        {               
         }
+
         private void RemoveFromReadyQueue(Process process)
         {
             List<Process> readyQueueList = readyQueue.ToArray().ToList();
@@ -18,25 +18,21 @@ namespace CPU_SCHEDULING_SIMULATION
             readyQueue = new Queue<Process>(readyQueueList);
         }
 
-        private Process GetProcessHighestResponseRatio()
+        private Process GetProcessHighestPriority()
         {
-            Process interestingProcess = readyQueue.Peek();
-            double highestResponseRatio = GetResponseRatio(clockTime, interestingProcess);
-            foreach(Process process in readyQueue)
+            //The Highest Priority in this case is the process with
+            //the lowest IOBlockTime
+            Process selectedProcess = readyQueue.Peek();
+            double highestPriority = selectedProcess.GetIOBlockTime();
+            foreach (Process process in readyQueue)
             {
-                if (GetResponseRatio(clockTime, process) > highestResponseRatio)
+                if (process.GetIOBlockTime() < highestPriority)
                 {
-                    interestingProcess = process;
-                    highestResponseRatio = GetResponseRatio(clockTime, process);
+                    selectedProcess = process;
+                    highestPriority = selectedProcess.GetIOBlockTime();
                 }
             }
-            return interestingProcess;
-        }
-
-        private double GetResponseRatio(int currentTime, Process process)
-        {
-            int burstTime = process.GetBurstTime();
-            return (double) ((currentTime - process.GetArrivalTime()) + burstTime) / (burstTime);
+            return selectedProcess;
         }
 
         public override Schedule GenerateProcessSchedule()
@@ -62,18 +58,16 @@ namespace CPU_SCHEDULING_SIMULATION
 
 
                     //Check if the currently running Process is blocked
-                    //If the process has to block on I/O, it enters the waiting state
                     else if (currentlyRunningProcess.IsBlocked(clockTime))
                     {
                         schedule.Add(new ScheduleItem(currentlyRunningProcess.GetProcessID(), startTimeCurrentlyRunningProcess, clockTime, false));
                         currentlyRunningProcess.SetBurstTime(currentlyRunningProcess.GetBurstTime() - runningTime);
                         Console.WriteLine(String.Format("PID: {0} is blocked, returned back to waiting Queue.", currentlyRunningProcess.GetProcessID()));
-                        waitingQueue.Enqueue(currentlyRunningProcess); //Add IO Process to waitQueue(in waiting State)
+                        waitingQueue.Enqueue(currentlyRunningProcess); //Add IO Process to waitQueue
                         RemoveFromReadyQueue(currentlyRunningProcess);
                         currentlyRunningProcess = null;
                         startTimeCurrentlyRunningProcess = 0;
                     }
-
 
                 }
 
@@ -96,17 +90,13 @@ namespace CPU_SCHEDULING_SIMULATION
                     continue;
                 }
 
-
-                //Find process with highest response ratio
-                Process selectedProcess = GetProcessHighestResponseRatio();
+                //Find process with the highest priority
+                Process selectedProcess = GetProcessHighestPriority();
 
                 runProcess(selectedProcess);
-
             }
 
             return schedule;
         }
-
-
     }
 }

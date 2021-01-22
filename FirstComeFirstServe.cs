@@ -5,38 +5,18 @@ using System.Text;
 
 namespace CPU_SCHEDULING_SIMULATION
 {
-    class HighestResponseRatioNext : SchedulingAlgorithm
+    class FirstComeFirstServe : SchedulingAlgorithm
     {
-        public HighestResponseRatioNext(List<Process> inputwaitingQueue) : base(inputwaitingQueue)
+        public FirstComeFirstServe(List<Process> inputwaitingQueue) : base(inputwaitingQueue)
         {
 
         }
+
         private void RemoveFromReadyQueue(Process process)
         {
             List<Process> readyQueueList = readyQueue.ToArray().ToList();
             readyQueueList.Remove(process);
             readyQueue = new Queue<Process>(readyQueueList);
-        }
-
-        private Process GetProcessHighestResponseRatio()
-        {
-            Process interestingProcess = readyQueue.Peek();
-            double highestResponseRatio = GetResponseRatio(clockTime, interestingProcess);
-            foreach(Process process in readyQueue)
-            {
-                if (GetResponseRatio(clockTime, process) > highestResponseRatio)
-                {
-                    interestingProcess = process;
-                    highestResponseRatio = GetResponseRatio(clockTime, process);
-                }
-            }
-            return interestingProcess;
-        }
-
-        private double GetResponseRatio(int currentTime, Process process)
-        {
-            int burstTime = process.GetBurstTime();
-            return (double) ((currentTime - process.GetArrivalTime()) + burstTime) / (burstTime);
         }
 
         public override Schedule GenerateProcessSchedule()
@@ -68,7 +48,7 @@ namespace CPU_SCHEDULING_SIMULATION
                         schedule.Add(new ScheduleItem(currentlyRunningProcess.GetProcessID(), startTimeCurrentlyRunningProcess, clockTime, false));
                         currentlyRunningProcess.SetBurstTime(currentlyRunningProcess.GetBurstTime() - runningTime);
                         Console.WriteLine(String.Format("PID: {0} is blocked, returned back to waiting Queue.", currentlyRunningProcess.GetProcessID()));
-                        waitingQueue.Enqueue(currentlyRunningProcess); //Add IO Process to waitQueue(in waiting State)
+                        waitingQueue.Enqueue(currentlyRunningProcess); //Add IO Process to waitQueue
                         RemoveFromReadyQueue(currentlyRunningProcess);
                         currentlyRunningProcess = null;
                         startTimeCurrentlyRunningProcess = 0;
@@ -97,8 +77,9 @@ namespace CPU_SCHEDULING_SIMULATION
                 }
 
 
-                //Find process with highest response ratio
-                Process selectedProcess = GetProcessHighestResponseRatio();
+                //process next process on Queue
+                //the scheduler picks the process from the head of the queue
+                Process selectedProcess = readyQueue.Peek();
 
                 runProcess(selectedProcess);
 
@@ -106,7 +87,5 @@ namespace CPU_SCHEDULING_SIMULATION
 
             return schedule;
         }
-
-
     }
 }

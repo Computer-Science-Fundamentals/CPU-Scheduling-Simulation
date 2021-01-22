@@ -45,7 +45,9 @@ namespace CPU_SCHEDULING_SIMULATION
                     readyQueue.Enqueue(waitingQueue.Dequeue());
                     continue;
                 }
+
                 //reset ArrivalTime of blocked process on waitingQueue
+                //update the arrival time of processes waiting for IO
                 if (clockTime > arrivalTime) {
                     process.SetArrivalTime(clockTime + process.GetIOBlockTime() + 1);
                 }
@@ -53,26 +55,6 @@ namespace CPU_SCHEDULING_SIMULATION
                 Console.WriteLine(String.Format("PID {0} is still waiting..., ClockTime: {1}, BlockTillTime: {2}, Arrival Time: {3}", 
                     process.GetProcessID(), clockTime, process.GetBlockedTill(), process.GetArrivalTime()));
             }
-
-            //Currently arrived not blocked processes
-
-            //Queue<Process> temp = new Queue<Process>(waitingQueue);
-            //foreach(Process process in temp)
-            //{
-            //    //Currently arrived not blocked processes
-            //    if (process.GetArrivalTime().Equals(clockTime) && !(process.IsBlocked(clockTime)))
-            //    {
-            //        readyQueue.Enqueue(waitingQueue.Dequeue());
-            //        continue;
-            //    }
-            //    Console.WriteLine(String.Format("PID {0} is still waiting..., ClockTime: {1}, BlockTillTime: {2}", process.GetProcessID(), clockTime, process.GetBlockedTill()));
-            //    ////Processes that were blocked but are now ready
-            //    //if (process.GetBlockedTill().Equals(clockTime))
-            //    //{
-            //    //    readyQueue.Enqueue(waitingQueue.Dequeue());
-            //    //}
-
-            //}
         }
 
         public int GetTotalProcessCount() {

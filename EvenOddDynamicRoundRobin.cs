@@ -59,6 +59,7 @@ namespace CPU_SCHEDULING_SIMULATION
 
 
                     //Check if the currently running Process is blocked
+                    //If the process has to block on I/O, it enters the waiting state
                     else if (currentlyRunningProcess.IsBlocked(clockTime))
                     {
                         schedule.Add(new ScheduleItem(currentlyRunningProcess.GetProcessID(), startTimeCurrentlyRunningProcess, clockTime, false));
