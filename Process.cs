@@ -34,9 +34,9 @@ namespace CPU_SCHEDULING_SIMULATION
             this.burstTime = burseTime;
         }
 
-        public void SetArrivalTime(int burseTime)
+        public void SetArrivalTime(int arrivalTime)
         {
-            this.arrivalTime = burseTime;
+            this.arrivalTime = arrivalTime;
         }
 
         public double GetIOBlockProbability()

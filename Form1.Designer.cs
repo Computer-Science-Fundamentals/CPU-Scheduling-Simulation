@@ -34,49 +34,49 @@
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.grdProcesses = new System.Windows.Forms.DataGridView();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.grdPPSchedule = new System.Windows.Forms.DataGridView();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.label2 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.lblPPAvgTurnAround = new System.Windows.Forms.Label();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.lblHRRNAvgTurnAround = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
-            this.panel3 = new System.Windows.Forms.Panel();
-            this.lblEODRRAvgTurnAround = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
             this.ProcessID = new System.Windows.Forms.DataGridViewLinkColumn();
             this.ArrivalTime = new System.Windows.Forms.DataGridViewLinkColumn();
             this.BurstTime = new System.Windows.Forms.DataGridViewLinkColumn();
             this.IOBlockTime = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.grdFCFSSchedule = new System.Windows.Forms.DataGridView();
             this.dataGridViewLinkColumn1 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.StartTime = new System.Windows.Forms.DataGridViewLinkColumn();
             this.FinishTime = new System.Windows.Forms.DataGridViewLinkColumn();
             this.TurnAroundTime = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.grdHRRNSchedule = new System.Windows.Forms.DataGridView();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.grdPNPSchedule = new System.Windows.Forms.DataGridView();
             this.dataGridViewLinkColumn2 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dataGridViewLinkColumn3 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dataGridViewLinkColumn4 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dataGridViewLinkColumn5 = new System.Windows.Forms.DataGridViewLinkColumn();
-            this.grdEODRRSchedule = new System.Windows.Forms.DataGridView();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.grdSRJFSchedule = new System.Windows.Forms.DataGridView();
             this.dataGridViewLinkColumn6 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dataGridViewLinkColumn7 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dataGridViewLinkColumn8 = new System.Windows.Forms.DataGridViewLinkColumn();
             this.dataGridViewLinkColumn9 = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.label2 = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblFCFSAvgTurnAround = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblPNPAvgTurnAround = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.lblSRJFAvgTurnAround = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grdProcesses)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdPPSchedule)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdFCFSSchedule)).BeginInit();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdPNPSchedule)).BeginInit();
             this.groupBox5.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.grdSRJFSchedule)).BeginInit();
             this.panel1.SuspendLayout();
             this.panel2.SuspendLayout();
             this.panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdHRRNSchedule)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdEODRRSchedule)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -84,7 +84,7 @@
             this.groupBox1.Controls.Add(this.btnGenerateProcess);
             this.groupBox1.Controls.Add(this.txtNoOfProcess);
             this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(12, 22);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(776, 75);
@@ -109,7 +109,7 @@
             this.txtNoOfProcess.Mask = "000";
             this.txtNoOfProcess.Name = "txtNoOfProcess";
             this.txtNoOfProcess.RejectInputOnFirstFailure = true;
-            this.txtNoOfProcess.Size = new System.Drawing.Size(100, 27);
+            this.txtNoOfProcess.Size = new System.Drawing.Size(100, 26);
             this.txtNoOfProcess.TabIndex = 1;
             // 
             // label1
@@ -117,20 +117,21 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(23, 38);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(264, 20);
+            this.label1.Size = new System.Drawing.Size(295, 20);
             this.label1.TabIndex = 0;
             this.label1.Text = "Enter No of Processes to Simulate :";
             // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.grdProcesses);
-            this.groupBox2.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(12, 125);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(776, 168);
             this.groupBox2.TabIndex = 3;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Generated CPU Processes Parameters (using exponential distribution function)";
+            this.groupBox2.Text = "Generated CPU Processes Parameters (using uniform distribution function)";
+            this.groupBox2.Enter += new System.EventHandler(this.groupBox2_Enter);
             // 
             // grdProcesses
             // 
@@ -143,145 +144,11 @@
             this.BurstTime,
             this.IOBlockTime});
             this.grdProcesses.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdProcesses.Location = new System.Drawing.Point(3, 23);
+            this.grdProcesses.Location = new System.Drawing.Point(3, 22);
             this.grdProcesses.Name = "grdProcesses";
             this.grdProcesses.ReadOnly = true;
-            this.grdProcesses.Size = new System.Drawing.Size(770, 142);
+            this.grdProcesses.Size = new System.Drawing.Size(770, 143);
             this.grdProcesses.TabIndex = 0;
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.grdPPSchedule);
-            this.groupBox3.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox3.Location = new System.Drawing.Point(12, 343);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(776, 168);
-            this.groupBox3.TabIndex = 4;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Schedule Result of Preemptive Priority Algorithm";
-            // 
-            // grdPPSchedule
-            // 
-            this.grdPPSchedule.AllowUserToAddRows = false;
-            this.grdPPSchedule.AllowUserToDeleteRows = false;
-            this.grdPPSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdPPSchedule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewLinkColumn1,
-            this.StartTime,
-            this.FinishTime,
-            this.TurnAroundTime});
-            this.grdPPSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdPPSchedule.Location = new System.Drawing.Point(3, 23);
-            this.grdPPSchedule.Name = "grdPPSchedule";
-            this.grdPPSchedule.ReadOnly = true;
-            this.grdPPSchedule.Size = new System.Drawing.Size(770, 142);
-            this.grdPPSchedule.TabIndex = 0;
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.grdHRRNSchedule);
-            this.groupBox4.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox4.Location = new System.Drawing.Point(15, 564);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(776, 168);
-            this.groupBox4.TabIndex = 5;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Schedule Result of Highest-Response-ratio-Next Algorithm";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.grdEODRRSchedule);
-            this.groupBox5.Font = new System.Drawing.Font("Roboto", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.groupBox5.Location = new System.Drawing.Point(15, 791);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(776, 168);
-            this.groupBox5.TabIndex = 6;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "Schedule Result of Even-Odd Dynamic Round Robin Algorithm";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(3, 8);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(240, 16);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Average Turn Around Time (ms) : ";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.lblPPAvgTurnAround);
-            this.panel1.Controls.Add(this.label2);
-            this.panel1.Location = new System.Drawing.Point(481, 320);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(304, 29);
-            this.panel1.TabIndex = 7;
-            // 
-            // lblPPAvgTurnAround
-            // 
-            this.lblPPAvgTurnAround.AutoSize = true;
-            this.lblPPAvgTurnAround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblPPAvgTurnAround.Location = new System.Drawing.Point(242, 8);
-            this.lblPPAvgTurnAround.Name = "lblPPAvgTurnAround";
-            this.lblPPAvgTurnAround.Size = new System.Drawing.Size(0, 16);
-            this.lblPPAvgTurnAround.TabIndex = 2;
-            // 
-            // panel2
-            // 
-            this.panel2.Controls.Add(this.lblHRRNAvgTurnAround);
-            this.panel2.Controls.Add(this.label4);
-            this.panel2.Location = new System.Drawing.Point(481, 540);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(304, 29);
-            this.panel2.TabIndex = 8;
-            // 
-            // lblHRRNAvgTurnAround
-            // 
-            this.lblHRRNAvgTurnAround.AutoSize = true;
-            this.lblHRRNAvgTurnAround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblHRRNAvgTurnAround.Location = new System.Drawing.Point(242, 7);
-            this.lblHRRNAvgTurnAround.Name = "lblHRRNAvgTurnAround";
-            this.lblHRRNAvgTurnAround.Size = new System.Drawing.Size(0, 16);
-            this.lblHRRNAvgTurnAround.TabIndex = 2;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(3, 8);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(240, 16);
-            this.label4.TabIndex = 1;
-            this.label4.Text = "Average Turn Around Time (ms) : ";
-            // 
-            // panel3
-            // 
-            this.panel3.Controls.Add(this.lblEODRRAvgTurnAround);
-            this.panel3.Controls.Add(this.label5);
-            this.panel3.Location = new System.Drawing.Point(481, 769);
-            this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(304, 29);
-            this.panel3.TabIndex = 9;
-            // 
-            // lblEODRRAvgTurnAround
-            // 
-            this.lblEODRRAvgTurnAround.AutoSize = true;
-            this.lblEODRRAvgTurnAround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblEODRRAvgTurnAround.Location = new System.Drawing.Point(242, 7);
-            this.lblEODRRAvgTurnAround.Name = "lblEODRRAvgTurnAround";
-            this.lblEODRRAvgTurnAround.Size = new System.Drawing.Size(0, 16);
-            this.lblEODRRAvgTurnAround.TabIndex = 2;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(3, 8);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(240, 16);
-            this.label5.TabIndex = 1;
-            this.label5.Text = "Average Turn Around Time (ms) : ";
             // 
             // ProcessID
             // 
@@ -313,6 +180,34 @@
             this.IOBlockTime.HeaderText = "IO Block Time (ms)";
             this.IOBlockTime.Name = "IOBlockTime";
             this.IOBlockTime.ReadOnly = true;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.grdFCFSSchedule);
+            this.groupBox3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox3.Location = new System.Drawing.Point(12, 343);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(776, 168);
+            this.groupBox3.TabIndex = 4;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Schedule Result of First Come First Serve Algorithm";
+            // 
+            // grdFCFSSchedule
+            // 
+            this.grdFCFSSchedule.AllowUserToAddRows = false;
+            this.grdFCFSSchedule.AllowUserToDeleteRows = false;
+            this.grdFCFSSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdFCFSSchedule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridViewLinkColumn1,
+            this.StartTime,
+            this.FinishTime,
+            this.TurnAroundTime});
+            this.grdFCFSSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdFCFSSchedule.Location = new System.Drawing.Point(3, 22);
+            this.grdFCFSSchedule.Name = "grdFCFSSchedule";
+            this.grdFCFSSchedule.ReadOnly = true;
+            this.grdFCFSSchedule.Size = new System.Drawing.Size(770, 143);
+            this.grdFCFSSchedule.TabIndex = 0;
             // 
             // dataGridViewLinkColumn1
             // 
@@ -349,22 +244,33 @@
             this.TurnAroundTime.Name = "TurnAroundTime";
             this.TurnAroundTime.ReadOnly = true;
             // 
-            // grdHRRNSchedule
+            // groupBox4
             // 
-            this.grdHRRNSchedule.AllowUserToAddRows = false;
-            this.grdHRRNSchedule.AllowUserToDeleteRows = false;
-            this.grdHRRNSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdHRRNSchedule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.groupBox4.Controls.Add(this.grdPNPSchedule);
+            this.groupBox4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox4.Location = new System.Drawing.Point(15, 564);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(776, 168);
+            this.groupBox4.TabIndex = 5;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Schedule Result of Priority-Non-Preemptive Algorithm";
+            // 
+            // grdPNPSchedule
+            // 
+            this.grdPNPSchedule.AllowUserToAddRows = false;
+            this.grdPNPSchedule.AllowUserToDeleteRows = false;
+            this.grdPNPSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdPNPSchedule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewLinkColumn2,
             this.dataGridViewLinkColumn3,
             this.dataGridViewLinkColumn4,
             this.dataGridViewLinkColumn5});
-            this.grdHRRNSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdHRRNSchedule.Location = new System.Drawing.Point(3, 23);
-            this.grdHRRNSchedule.Name = "grdHRRNSchedule";
-            this.grdHRRNSchedule.ReadOnly = true;
-            this.grdHRRNSchedule.Size = new System.Drawing.Size(770, 142);
-            this.grdHRRNSchedule.TabIndex = 1;
+            this.grdPNPSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdPNPSchedule.Location = new System.Drawing.Point(3, 22);
+            this.grdPNPSchedule.Name = "grdPNPSchedule";
+            this.grdPNPSchedule.ReadOnly = true;
+            this.grdPNPSchedule.Size = new System.Drawing.Size(770, 143);
+            this.grdPNPSchedule.TabIndex = 1;
             // 
             // dataGridViewLinkColumn2
             // 
@@ -401,22 +307,33 @@
             this.dataGridViewLinkColumn5.Name = "dataGridViewLinkColumn5";
             this.dataGridViewLinkColumn5.ReadOnly = true;
             // 
-            // grdEODRRSchedule
+            // groupBox5
             // 
-            this.grdEODRRSchedule.AllowUserToAddRows = false;
-            this.grdEODRRSchedule.AllowUserToDeleteRows = false;
-            this.grdEODRRSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.grdEODRRSchedule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.groupBox5.Controls.Add(this.grdSRJFSchedule);
+            this.groupBox5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.groupBox5.Location = new System.Drawing.Point(15, 791);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(776, 168);
+            this.groupBox5.TabIndex = 6;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "Schedule Result of Shortest Remaining Job First Algorithm";
+            // 
+            // grdSRJFSchedule
+            // 
+            this.grdSRJFSchedule.AllowUserToAddRows = false;
+            this.grdSRJFSchedule.AllowUserToDeleteRows = false;
+            this.grdSRJFSchedule.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.grdSRJFSchedule.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.dataGridViewLinkColumn6,
             this.dataGridViewLinkColumn7,
             this.dataGridViewLinkColumn8,
             this.dataGridViewLinkColumn9});
-            this.grdEODRRSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.grdEODRRSchedule.Location = new System.Drawing.Point(3, 23);
-            this.grdEODRRSchedule.Name = "grdEODRRSchedule";
-            this.grdEODRRSchedule.ReadOnly = true;
-            this.grdEODRRSchedule.Size = new System.Drawing.Size(770, 142);
-            this.grdEODRRSchedule.TabIndex = 1;
+            this.grdSRJFSchedule.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.grdSRJFSchedule.Location = new System.Drawing.Point(3, 22);
+            this.grdSRJFSchedule.Name = "grdSRJFSchedule";
+            this.grdSRJFSchedule.ReadOnly = true;
+            this.grdSRJFSchedule.Size = new System.Drawing.Size(770, 143);
+            this.grdSRJFSchedule.TabIndex = 1;
             // 
             // dataGridViewLinkColumn6
             // 
@@ -453,6 +370,90 @@
             this.dataGridViewLinkColumn9.Name = "dataGridViewLinkColumn9";
             this.dataGridViewLinkColumn9.ReadOnly = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label2.Location = new System.Drawing.Point(3, 8);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(240, 16);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Average Turn Around Time (ms) : ";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.lblFCFSAvgTurnAround);
+            this.panel1.Controls.Add(this.label2);
+            this.panel1.Location = new System.Drawing.Point(481, 320);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(304, 29);
+            this.panel1.TabIndex = 7;
+            // 
+            // lblFCFSAvgTurnAround
+            // 
+            this.lblFCFSAvgTurnAround.AutoSize = true;
+            this.lblFCFSAvgTurnAround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblFCFSAvgTurnAround.Location = new System.Drawing.Point(242, 8);
+            this.lblFCFSAvgTurnAround.Name = "lblFCFSAvgTurnAround";
+            this.lblFCFSAvgTurnAround.Size = new System.Drawing.Size(0, 16);
+            this.lblFCFSAvgTurnAround.TabIndex = 2;
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.lblPNPAvgTurnAround);
+            this.panel2.Controls.Add(this.label4);
+            this.panel2.Location = new System.Drawing.Point(481, 540);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(304, 29);
+            this.panel2.TabIndex = 8;
+            // 
+            // lblPNPAvgTurnAround
+            // 
+            this.lblPNPAvgTurnAround.AutoSize = true;
+            this.lblPNPAvgTurnAround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblPNPAvgTurnAround.Location = new System.Drawing.Point(242, 7);
+            this.lblPNPAvgTurnAround.Name = "lblPNPAvgTurnAround";
+            this.lblPNPAvgTurnAround.Size = new System.Drawing.Size(0, 16);
+            this.lblPNPAvgTurnAround.TabIndex = 2;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(3, 8);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(240, 16);
+            this.label4.TabIndex = 1;
+            this.label4.Text = "Average Turn Around Time (ms) : ";
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.lblSRJFAvgTurnAround);
+            this.panel3.Controls.Add(this.label5);
+            this.panel3.Location = new System.Drawing.Point(481, 769);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(304, 29);
+            this.panel3.TabIndex = 9;
+            // 
+            // lblSRJFAvgTurnAround
+            // 
+            this.lblSRJFAvgTurnAround.AutoSize = true;
+            this.lblSRJFAvgTurnAround.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSRJFAvgTurnAround.Location = new System.Drawing.Point(242, 7);
+            this.lblSRJFAvgTurnAround.Name = "lblSRJFAvgTurnAround";
+            this.lblSRJFAvgTurnAround.Size = new System.Drawing.Size(0, 16);
+            this.lblSRJFAvgTurnAround.TabIndex = 2;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label5.Location = new System.Drawing.Point(3, 8);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(240, 16);
+            this.label5.TabIndex = 1;
+            this.label5.Text = "Average Turn Around Time (ms) : ";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -475,17 +476,17 @@
             this.groupBox2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.grdProcesses)).EndInit();
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.grdPPSchedule)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.grdFCFSSchedule)).EndInit();
             this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdPNPSchedule)).EndInit();
             this.groupBox5.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.grdSRJFSchedule)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
             this.panel3.ResumeLayout(false);
             this.panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.grdHRRNSchedule)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.grdEODRRSchedule)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -499,17 +500,17 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.DataGridView grdProcesses;
         private System.Windows.Forms.GroupBox groupBox3;
-        private System.Windows.Forms.DataGridView grdPPSchedule;
+        private System.Windows.Forms.DataGridView grdFCFSSchedule;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Label lblPPAvgTurnAround;
+        private System.Windows.Forms.Label lblFCFSAvgTurnAround;
         private System.Windows.Forms.Panel panel2;
-        private System.Windows.Forms.Label lblHRRNAvgTurnAround;
+        private System.Windows.Forms.Label lblPNPAvgTurnAround;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Panel panel3;
-        private System.Windows.Forms.Label lblEODRRAvgTurnAround;
+        private System.Windows.Forms.Label lblSRJFAvgTurnAround;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.DataGridViewLinkColumn ProcessID;
         private System.Windows.Forms.DataGridViewLinkColumn ArrivalTime;
@@ -519,12 +520,12 @@
         private System.Windows.Forms.DataGridViewLinkColumn StartTime;
         private System.Windows.Forms.DataGridViewLinkColumn FinishTime;
         private System.Windows.Forms.DataGridViewLinkColumn TurnAroundTime;
-        private System.Windows.Forms.DataGridView grdHRRNSchedule;
+        private System.Windows.Forms.DataGridView grdPNPSchedule;
         private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn2;
         private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn3;
         private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn4;
         private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn5;
-        private System.Windows.Forms.DataGridView grdEODRRSchedule;
+        private System.Windows.Forms.DataGridView grdSRJFSchedule;
         private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn6;
         private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn7;
         private System.Windows.Forms.DataGridViewLinkColumn dataGridViewLinkColumn8;

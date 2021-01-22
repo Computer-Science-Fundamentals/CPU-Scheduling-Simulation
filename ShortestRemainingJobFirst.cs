@@ -5,12 +5,13 @@ using System.Text;
 
 namespace CPU_SCHEDULING_SIMULATION
 {
-    class HighestResponseRatioNext : SchedulingAlgorithm
+    class ShortestRemainingJobFirst : SchedulingAlgorithm
     {
-        public HighestResponseRatioNext(List<Process> inputwaitingQueue) : base(inputwaitingQueue)
-        {
 
+        public ShortestRemainingJobFirst(List<Process> inputwaitingQueue) : base(inputwaitingQueue)
+        {
         }
+
         private void RemoveFromReadyQueue(Process process)
         {
             List<Process> readyQueueList = readyQueue.ToArray().ToList();
@@ -18,25 +19,21 @@ namespace CPU_SCHEDULING_SIMULATION
             readyQueue = new Queue<Process>(readyQueueList);
         }
 
-        private Process GetProcessHighestResponseRatio()
+        private Process GetProcessSmallestProcessingTime()
         {
-            Process interestingProcess = readyQueue.Peek();
-            double highestResponseRatio = GetResponseRatio(clockTime, interestingProcess);
-            foreach(Process process in readyQueue)
+            //The best process is the one with the lowest
+            //burst time
+            Process selectedProcess = readyQueue.Peek();
+            double smallestBurstTime = selectedProcess.GetBurstTime();
+            foreach (Process process in readyQueue)
             {
-                if (GetResponseRatio(clockTime, process) > highestResponseRatio)
+                if (process.GetBurstTime() < smallestBurstTime)
                 {
-                    interestingProcess = process;
-                    highestResponseRatio = GetResponseRatio(clockTime, process);
+                    selectedProcess = process;
+                    smallestBurstTime = selectedProcess.GetBurstTime();
                 }
             }
-            return interestingProcess;
-        }
-
-        private double GetResponseRatio(int currentTime, Process process)
-        {
-            int burstTime = process.GetBurstTime();
-            return (double) ((currentTime - process.GetArrivalTime()) + burstTime) / (burstTime);
+            return selectedProcess;
         }
 
         public override Schedule GenerateProcessSchedule()
@@ -62,19 +59,16 @@ namespace CPU_SCHEDULING_SIMULATION
 
 
                     //Check if the currently running Process is blocked
-                    //If the process has to block on I/O, it enters the waiting state
                     else if (currentlyRunningProcess.IsBlocked(clockTime))
                     {
                         schedule.Add(new ScheduleItem(currentlyRunningProcess.GetProcessID(), startTimeCurrentlyRunningProcess, clockTime, false));
                         currentlyRunningProcess.SetBurstTime(currentlyRunningProcess.GetBurstTime() - runningTime);
                         Console.WriteLine(String.Format("PID: {0} is blocked, returned back to waiting Queue.", currentlyRunningProcess.GetProcessID()));
-                        waitingQueue.Enqueue(currentlyRunningProcess); //Add IO Process to waitQueue(in waiting State)
+                        waitingQueue.Enqueue(currentlyRunningProcess); //Add IO Process to waitQueue
                         RemoveFromReadyQueue(currentlyRunningProcess);
                         currentlyRunningProcess = null;
                         startTimeCurrentlyRunningProcess = 0;
                     }
-
-
                 }
 
                 //Load waiting processes into readyQueue
@@ -88,25 +82,50 @@ namespace CPU_SCHEDULING_SIMULATION
                     Console.WriteLine(String.Format("No of Waiting Jobs: {0}", waitingQueue.Count));
                     continue;
                 }
-                //If a process is running already increase clockTime
+
+                //Find process with the smallest remaining time to complete
+                Process selectedProcess = GetProcessSmallestProcessingTime();
+
                 if (currentlyRunningProcess != null)
                 {
-                    clockTime++;
-                    Console.WriteLine(String.Format("PID: {0} is processing!", currentlyRunningProcess.GetProcessID()));
-                    continue;
+                    int runningTime = clockTime - startTimeCurrentlyRunningProcess;
+                    int currentlyRunningProcessBurstTime = currentlyRunningProcess.GetBurstTime();
+                    int currentlyRunningProcessTimeLeft = currentlyRunningProcessBurstTime - runningTime;
+                    int selectedProcessBurstTime = selectedProcess.GetBurstTime();
+
+                    //If selectedProcess is the runningProcess
+                    //i.e running process is the one with shortest cpu burst time
+                    if (currentlyRunningProcess.Equals(selectedProcess))
+                    {
+                        clockTime++;
+                        continue;
+                    }
+
+                    //If currently running process is still faster than selectedProcess
+                    if (currentlyRunningProcessTimeLeft <= selectedProcessBurstTime)
+                    {
+                        clockTime++;
+                        continue;
+                    }
+                    else if (currentlyRunningProcessTimeLeft > selectedProcessBurstTime)
+                    {
+                        //If currently running process is slower then run selectedProcess
+                        //prepare to context switch currentlyRunningProcess by 
+                        //setting its Burst Time to the remaining Time for Completion(aka Saving State)
+                        currentlyRunningProcess.SetBurstTime(currentlyRunningProcessTimeLeft);
+                        RemoveFromReadyQueue(currentlyRunningProcess);
+                        readyQueue.Enqueue(currentlyRunningProcess);//Add preempted process back to readyQueue
+                        Console.WriteLine(String.Format("PID: {0} is preempted, returned back to ready Queue.", currentlyRunningProcess.GetProcessID()));
+                        schedule.Add(new ScheduleItem(currentlyRunningProcess.GetProcessID(), startTimeCurrentlyRunningProcess, clockTime, false));
+                        currentlyRunningProcess = null;
+                        startTimeCurrentlyRunningProcess = 0;
+                    }
                 }
 
-
-                //Find process with highest response ratio
-                Process selectedProcess = GetProcessHighestResponseRatio();
-
                 runProcess(selectedProcess);
-
             }
 
             return schedule;
         }
-
-
     }
 }
